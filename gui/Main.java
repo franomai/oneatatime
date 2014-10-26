@@ -1,41 +1,35 @@
 package gui;
 
 import gui.functionalAreas.*;
-import gui.functionalAreas.downloadAreas.*;
-import gui.functionalAreas.textAreas.*;
-
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.io.InputStream;
-
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import com.sun.jna.Native;
-import com.sun.jna.NativeLibrary;
-
 import defaults.Defaults;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
+/**
+ * This is the main class, in that it initializes the GUI. It gets the look and
+ * feel and associated libraries, and then constructs the GUI bit my bit,
+ * initializing each element and adding it to the GUI. Once each element has
+ * been built and every element added to the frame the frame is packed and
+ * displayed.
+ * 
+ * @author fsta657
+ * 
+ */
+@SuppressWarnings("serial")
 public class Main extends JFrame {
 
 	private MyVLCPlayer _vlcPlayer;
-	private FunctionalAreaChooser _funcChooser;
-	private FunctionalAreaSwitcher _funcArea = new FunctionalAreaSwitcher();
 	private VideoControlArea _control;
 
 	public static void main(final String[] args) {
@@ -50,7 +44,7 @@ public class Main extends JFrame {
 			Defaults.setDefaultFont(new Font("Lucida Sans", Font.BOLD, 11));
 		}
 
-		// Set L& F
+		// Set look & feel
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -59,7 +53,6 @@ public class Main extends JFrame {
 				}
 			}
 		} catch (Exception e) {
-			// If Nimbus is not available, use default
 		}
 
 		// Load VLC library
@@ -88,13 +81,12 @@ public class Main extends JFrame {
 		setResizable(false);
 		// Set up layout
 		this.setLayout(new BorderLayout());
-
+		
 		/*
 		 * FIELD SET-UP
 		 */
-
+		
 		// VLC player set up
-		 
 		_vlcPlayer = new MyVLCPlayer();
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setPreferredSize(new Dimension(Defaults.DefaultWindowWidth,
@@ -103,7 +95,6 @@ public class Main extends JFrame {
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 8));
 		_control = new VideoControlArea(_vlcPlayer);
 		bottomPanel.add(_control);
-
 		// Combine into panel
 		JPanel videoPanel = new JPanel();
 		videoPanel.setPreferredSize(new Dimension(Defaults.DefaultWindowWidth,
@@ -125,10 +116,8 @@ public class Main extends JFrame {
 		functionalArea.add(_funcChooser, BorderLayout.WEST);
 		functionalArea.add(_funcArea, BorderLayout.EAST);
 		this.add(functionalArea, BorderLayout.SOUTH);
-
 		// Display the window.
 		pack();
 		setVisible(true);
 	}
 }
-

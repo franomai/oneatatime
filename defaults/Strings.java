@@ -1,10 +1,15 @@
 package defaults;
 
+/**
+ * This class contains the 'defaults' for Strings used by the GUI. More
+ * specifically, this class contains the tool tip text displayed when a
+ * section/option/level button is hovered over, and could also be used for
+ * tool tips of panel buttons if one so wanted to implement them.
+ * 
+ * @author fsta657
+ * 
+ */
 public class Strings {
-
-	/*
-	 * BUTTON TOOLTIPS
-	 */
 	// SECTION TOOLTIPS
 	public static final String FileTooltip = "General actions on files";
 	public static final String AudioTooltip = "Add/Edit video's audio";
@@ -25,7 +30,5 @@ public class Strings {
 	// LEVEL TOOLTIPS
 	public static final String BasicTooltip = "Open basic option";
 	public static final String AdvancedTooltip = "Open advanced option";
-	
-	// GO-BUTTON TOOLTIPS
-	
+
 }
