@@ -21,9 +21,21 @@ import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
 import gui.functionalAreas.subtitleAreas.BasicCreateSubtitles;
 import gui.functionalAreas.workers.AddTextWorker;
-import gui.functionalAreas.workers.DownloadWorker;
 import gui.functionalAreas.workers.StreamWorker;
 
+/**
+ * This class represents the basic add credits pane, identical to add title bar
+ * the worker inputs. It contains the create method for painting this pane,
+ * allowing for a file to be selected and the operation to be carried out. This
+ * operation is carried out by grabbing the values of the fields of
+ * AdvancedAddTextArea and passing them into a worker with fields from this
+ * class and the player. Upon completion error/success is reported via
+ * processWorkerResults.
+ * 
+ * @author fsta657
+ * 
+ */
+@SuppressWarnings("serial")
 public class BasicAddCreditsArea extends AbstractFunctionalArea implements
 		ActionListener {
 
@@ -193,11 +205,11 @@ public class BasicAddCreditsArea extends AbstractFunctionalArea implements
 					JOptionPane.showMessageDialog(null,
 							"No video file currently selected", "VAMIX Error",
 							JOptionPane.ERROR_MESSAGE);
-				} else if (_outputName.getText().equals("")){
+				} else if (_outputName.getText().equals("")) {
 					JOptionPane.showMessageDialog(this,
-							"Please enter an output file name", "VAMIX Warning",
-							JOptionPane.ERROR_MESSAGE);
-				}else {
+							"Please enter an output file name",
+							"VAMIX Warning", JOptionPane.ERROR_MESSAGE);
+				} else {
 					String outVideo;
 					String[] arr = inVid.split("\\.");
 					String ext = "." + arr[arr.length - 1];
@@ -218,74 +230,83 @@ public class BasicAddCreditsArea extends AbstractFunctionalArea implements
 					try {
 						test = strim.get();
 					} catch (InterruptedException | ExecutionException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					if (test.equals("0,0")|test.equals("1,0")){
+					if (test.equals("0,0") | test.equals("1,0")) {
 						JOptionPane.showMessageDialog(null,
 								"No video stream to write to", "VAMIX Error",
-								JOptionPane.ERROR_MESSAGE);	
-					}
-					else{
-						
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+
 						File f = new File(outVideo);
 						File q = new File(VideoControlArea.getPath());
-						if (q.getAbsolutePath().equals(f.getAbsolutePath())){
-							JOptionPane.showMessageDialog(null,
-									"Input cannot have the same name as output, please rename.",
-									"VAMIX Error", JOptionPane.ERROR_MESSAGE);
-						}else{
-						if (f.exists()){
-							Object[] options = { "OK", "Cancel" };
-							int selected = JOptionPane
-									.showOptionDialog(
+						if (q.getAbsolutePath().equals(f.getAbsolutePath())) {
+							JOptionPane
+									.showMessageDialog(
 											null,
-											"Warning: the file to be created will overwrite an existing file. Continue?",
-											"Overwrite warning",
-											JOptionPane.DEFAULT_OPTION,
-											JOptionPane.WARNING_MESSAGE, null,
-											options, options[0]);
+											"Input cannot have the same name as output, please rename.",
+											"VAMIX Error",
+											JOptionPane.ERROR_MESSAGE);
+						} else {
+							if (f.exists()) {
+								Object[] options = { "OK", "Cancel" };
+								int selected = JOptionPane
+										.showOptionDialog(
+												null,
+												"Warning: the file to be created will overwrite an existing file. Continue?",
+												"Overwrite warning",
+												JOptionPane.DEFAULT_OPTION,
+												JOptionPane.WARNING_MESSAGE,
+												null, options, options[0]);
 
-							if (selected == 0) {
-								String [] arr3 = VideoControlArea._showDur.getText().split(":");
-								int dur = BasicCreateSubtitles.convert(arr3[0],arr3[1],arr3[2]);
-								
-							_worker = new AddTextWorker(
-									inVid,
-									outVideo,
-									this,
-									"/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
-									_text.getText(), (String) _pos.getSelectedItem(),
-									_at.getCurrentFontSize(), _at
-											.getCurrentFontColour(), Integer
-											.toString(dur - Integer
-													.parseInt(_time.getText())), 2);
-							_canAdd = false;
-							_preview.setEnabled(false);
-							_add.setEnabled(false);
-							_worker.execute();
+								if (selected == 0) {
+									String[] arr3 = VideoControlArea._showDur
+											.getText().split(":");
+									int dur = BasicCreateSubtitles.convert(
+											arr3[0], arr3[1], arr3[2]);
+
+									_worker = new AddTextWorker(
+											inVid,
+											outVideo,
+											this,
+											"/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
+											_text.getText(), (String) _pos
+													.getSelectedItem(), _at
+													.getCurrentFontSize(), _at
+													.getCurrentFontColour(),
+											Integer.toString(dur
+													- Integer.parseInt(_time
+															.getText())), 2);
+									_canAdd = false;
+									_preview.setEnabled(false);
+									_add.setEnabled(false);
+									_worker.execute();
+								}
+							} else {
+								String[] arr3 = VideoControlArea._showDur
+										.getText().split(":");
+								int dur = BasicCreateSubtitles.convert(arr3[0],
+										arr3[1], arr3[2]);
+
+								_worker = new AddTextWorker(
+										inVid,
+										outVideo,
+										this,
+										"/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
+										_text.getText(), (String) _pos
+												.getSelectedItem(), _at
+												.getCurrentFontSize(), _at
+												.getCurrentFontColour(),
+										Integer.toString(dur
+												- Integer.parseInt(_time
+														.getText())), 2);
+								_canAdd = false;
+								_preview.setEnabled(false);
+								_add.setEnabled(false);
+								_worker.execute();
 							}
-						}else{
-							String [] arr3 = VideoControlArea._showDur.getText().split(":");
-							int dur = BasicCreateSubtitles.convert(arr3[0],arr3[1],arr3[2]);
-							
-						_worker = new AddTextWorker(
-								inVid,
-								outVideo,
-								this,
-								"/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
-								_text.getText(), (String) _pos.getSelectedItem(),
-								_at.getCurrentFontSize(), _at
-										.getCurrentFontColour(), Integer
-										.toString(dur - Integer
-												.parseInt(_time.getText())), 2);
-						_canAdd = false;
-						_preview.setEnabled(false);
-						_add.setEnabled(false);
-						_worker.execute();
 						}
-						}
-				}
+					}
 				}
 			}
 		}
@@ -297,11 +318,11 @@ public class BasicAddCreditsArea extends AbstractFunctionalArea implements
 					JOptionPane.showMessageDialog(null,
 							"No video file currently selected", "VAMIX Error",
 							JOptionPane.ERROR_MESSAGE);
-				} else if (_outputName.getText().equals("")){
+				} else if (_outputName.getText().equals("")) {
 					JOptionPane.showMessageDialog(this,
-							"Please enter an output file name", "VAMIX Warning",
-							JOptionPane.ERROR_MESSAGE);
-				}else {
+							"Please enter an output file name",
+							"VAMIX Warning", JOptionPane.ERROR_MESSAGE);
+				} else {
 					String outVideo;
 					String[] arr = inVid.split("\\.");
 					String ext = "." + arr[arr.length - 1];
@@ -321,28 +342,28 @@ public class BasicAddCreditsArea extends AbstractFunctionalArea implements
 					try {
 						test = strim.get();
 					} catch (InterruptedException | ExecutionException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					if (test.equals("0,0")|test.equals("1,0")){
+					if (test.equals("0,0") | test.equals("1,0")) {
 						JOptionPane.showMessageDialog(null,
 								"No video stream to write to", "VAMIX Error",
-								JOptionPane.ERROR_MESSAGE);	
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						_worker = new AddTextWorker(
+								inVid,
+								outVideo,
+								this,
+								"/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
+								_text.getText(), (String) _pos
+										.getSelectedItem(), _at
+										.getCurrentFontSize(), _at
+										.getCurrentFontColour(), _time
+										.getText(), 3);
+						_canAdd = false;
+						_add.setEnabled(false);
+						_preview.setEnabled(false);
+						_worker.execute();
 					}
-					else{
-					_worker = new AddTextWorker(
-							inVid,
-							outVideo,
-							this,
-							"/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
-							_text.getText(), (String) _pos.getSelectedItem(),
-							_at.getCurrentFontSize(), _at
-									.getCurrentFontColour(), _time.getText(), 3);
-					_canAdd = false;
-					_add.setEnabled(false);
-					_preview.setEnabled(false);
-					_worker.execute();
-				}
 				}
 			}
 		}
@@ -366,18 +387,14 @@ public class BasicAddCreditsArea extends AbstractFunctionalArea implements
 		_add.setEnabled(true);
 		_preview.setEnabled(true);
 	}
-	
-	/* 
-	 * UPDATING SECTION
-	   Order of returned items is:
-	   1) _text;
-	   2)_time;
-       3) _outputName;
-       4) _pos;
+
+	/*
+	 * UPDATING SECTION Order of returned items is: 1) _text; 2)_time; 3)
+	 * _outputName; 4) _pos;
 	 */
-	
-	public ArrayList<String> getFields(){
-		
+
+	public ArrayList<String> getFields() {
+
 		// Makes list
 		ArrayList<String> list = new ArrayList<String>();
 		list.add(_text.getText());
@@ -385,13 +402,13 @@ public class BasicAddCreditsArea extends AbstractFunctionalArea implements
 		list.add(_outputName.getText());
 		Integer i = _pos.getSelectedIndex();
 		list.add(i.toString());
-		
+
 		return list;
 	}
-	
-	public void setFields(ArrayList<String> list){
-		
-		//Update fields
+
+	public void setFields(ArrayList<String> list) {
+
+		// Update fields
 		_text.setText(list.get(0));
 		_time.setText(list.get(1));
 		_outputName.setText(list.get(2));

@@ -28,10 +28,20 @@ import gui.functionalAreas.AbstractFunctionalArea;
 import gui.functionalAreas.workers.UpdateFieldsWorker;
 import gui.functionalAreas.workers.WriteSaveWorker;
 
+
+/**
+ * This class represents the advanced add text pane. It contains the create method for painting this pane,
+ * some behaviors associated with components in this pane, and methods for accessing fields in this pane from
+ * basic panes, more specifically the basic credits and title panes (note both of these share this one pane,
+ * as both use the customization settings present here).
+ * @author fsta657
+ *
+ */
+@SuppressWarnings("serial")
 public class AdvancedAddTextArea extends AbstractFunctionalArea implements
 		ActionListener {
 
-	// Gui Fields
+	// GUI Fields
 	private JFileChooser _fileChooser;
 	private JFileChooser _saveChooser;
 	private JComboBox<String> _font;
@@ -41,7 +51,7 @@ public class AdvancedAddTextArea extends AbstractFunctionalArea implements
 	private JButton _loadState;
 	private JColorChooser _colourChooser;
 	private ColourDisplay _displayColour;
-	// Colour Fields
+	// Color Fields
 	private Color _currentColour = Color.BLACK;
 	private JButton _locationChooser;
 	private JTextField _outputLoc;
@@ -257,7 +267,7 @@ public class AdvancedAddTextArea extends AbstractFunctionalArea implements
 				// Open dialog
 				_currentColour = JColorChooser.showDialog(null,
 						"Choose Background Color", _currentColour);
-				 //if current colour null, make black
+				 //if current color null, make black
 				if (_currentColour == null){
 					_currentColour = Color.black;
 				}
@@ -265,7 +275,7 @@ public class AdvancedAddTextArea extends AbstractFunctionalArea implements
 				_displayColour.repaint();
 				_openChooser.setSelected(false);
 			} else {
-				// Do nothing if window alread open
+				// Do nothing if window already open
 			}
 		}
 		// If source is button to open file chooser, open the chooser
@@ -285,7 +295,6 @@ public class AdvancedAddTextArea extends AbstractFunctionalArea implements
 				File f = new File(VideoControlArea.location);
 				_fileChooser.setCurrentDirectory(f);
 			}
-			// NEEDS GOOD TEXT
 			_fileChooser.showOpenDialog(this);
 		}
 		// If source is file chooser, update text field
