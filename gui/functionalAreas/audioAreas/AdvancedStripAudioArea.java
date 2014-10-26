@@ -1,6 +1,5 @@
 package gui.functionalAreas.audioAreas;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -20,6 +19,14 @@ import defaults.Defaults;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
 
+/**
+ * This class represents the advanced strip pane. It contains the create method for painting this pane,
+ * some behaviors associated with components in this pane, and methods for accessing fields in this pane from
+ * basic panes, more specifically the basic strip pane.
+ * @author fsta657
+ *
+ */
+@SuppressWarnings("serial")
 public class AdvancedStripAudioArea extends AbstractFunctionalArea implements
 		ActionListener {
 
@@ -151,11 +158,17 @@ public class AdvancedStripAudioArea extends AbstractFunctionalArea implements
 			}
 		}
 	}
-
+	/**
+	 * Get the output name provided by the user for the strip operation.
+	 * @return Output name as a String.
+	 */
 	public String getOutputName() {
 		return _outputName.getText();
 	}
-
+	/**
+	 * Get the output location provided by the user for the strip operation.
+	 * @return Output location as a String.
+	 */
 	public String getOutputLocation() {
 		return _outputLoc.getText();
 	}

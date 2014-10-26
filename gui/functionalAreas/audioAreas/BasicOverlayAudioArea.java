@@ -1,13 +1,8 @@
 package gui.functionalAreas.audioAreas;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +20,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import defaults.Defaults;
-import gui.MyVLCPlayer;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
 import gui.functionalAreas.workers.OverlayWorker;
@@ -36,14 +30,22 @@ import gui.functionalAreas.workers.OverlayWorker;
  Download Button
  Cancel Button
  Error message (file exists, failed etc)
- NEEDS PROGRESS BAR
+ Progress Bar
  */
 
+/**
+ * This class represents the basic overlay pane. It contains the create method for painting this pane,
+ * allowing for a file to be selected and the operation to be carried out. This operation is carried out
+ * by grabbing the values of the fields of AdvancedOverlayArea and passing them into a worker with fields
+ * from this class and the player. Upon completion error/success is reported via processWorkerResults.
+ * @author fsta657
+ *
+ */
+@SuppressWarnings("serial")
 public class BasicOverlayAudioArea extends AbstractFunctionalArea implements
 		ActionListener {
 
 	private JFileChooser _fileChooser;
-	private JTextField _outputName;
 	private JButton _overlay;
 	private JTextField _currentFile;
 	private JButton _choose;
@@ -248,7 +250,6 @@ public class BasicOverlayAudioArea extends AbstractFunctionalArea implements
 				File f = new File(VideoControlArea.location);
 				_fileChooser.setCurrentDirectory(f);
 			}
-			// NEEDS GOOD TEXT
 			_fileChooser.showOpenDialog(this);
 		}
 		// If source is file chooser, update text field
@@ -269,7 +270,6 @@ public class BasicOverlayAudioArea extends AbstractFunctionalArea implements
 				try {
 					builder.start();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
