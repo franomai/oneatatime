@@ -1,17 +1,12 @@
 package gui.functionalAreas;
 
-import gui.Main;
-
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -20,23 +15,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import defaults.Defaults;
 import defaults.Strings;
 
+/**
+ * This class sets up the bottom left part of the GUI, or rather, the buttons
+ * for functionality sections and the panels associated with them. This class
+ * also handles shortcut keys, help dialogues, and the custom painting behavior
+ * for the ToggleButtons.
+ * 
+ * @author fsta657
+ * 
+ */
+@SuppressWarnings("serial")
 public class FunctionalAreaChooser extends JPanel {
 
-	// ADD SOME TOOL TIPS TO BUTTONS
+	//TO AVOID REPEATED COMMENTS THE STRUCTURE BELOW IS AS FOLLOWS
+	//INITIALIZE BUTTON
+	//ADD SHORTCUTS AND HELP TEXT
+	//SET DEFAULTS, COLOUR AND TOOLTIPS
+	//ADD TO PANEL
+	
+	//AFTER PANELS HAVE BEEN BUILT THEY ARE CONNECTED TOGETHER
+	//ALL BUTTONS USE THE SAME PAINTING BEHAVIOUR FOR GUI CONSISTENCY
+	
+	// --------------------------------------------------------------
 
 	/*
 	 * STRING FIELDS
@@ -188,10 +198,10 @@ public class FunctionalAreaChooser extends JPanel {
 							.showMessageDialog(
 									null,
 									"The download panel provides the tools to download a file from the internet, which can then be used in VAMIX.\n"
-									+"Pressing the DOWNLOAD button will attempt to download whatever is currently entered in the enter URL field.\n"
-											+"As such, please ensure the URL entered is a valid one. An error message will be displayed if an error does occur.\n"
-									+"The progress of the current download will be shown in the progress bar, and the process can be cancelled at any time using the CANCEL button.\n"
-											+"Options for editing the output file name and location can be found in the advanced options.",
+											+ "Pressing the DOWNLOAD button will attempt to download whatever is currently entered in the enter URL field.\n"
+											+ "As such, please ensure the URL entered is a valid one. An error message will be displayed if an error does occur.\n"
+											+ "The progress of the current download will be shown in the progress bar, and the process can be cancelled at any time using the CANCEL button.\n"
+											+ "Options for editing the output file name and location can be found in the advanced options.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -199,13 +209,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -220,11 +230,11 @@ public class FunctionalAreaChooser extends JPanel {
 							.showMessageDialog(
 									null,
 									"The trim panel provides the tools to cut a given media file to a given duration, which can then be used in VAMIX.\n"
-									+"To select a media file for trimming use the SELECT button. This will open a file chooser where the desired file can be selected.\n" +
-									"To preview the selected audio file the PREVIEW button, and the file will play in a seperate window .\n"
-									+"Durations are specified in the start and duration fields. An output file name can also be specified in the appropriate field.\n"
-									+ "After all these fields have been filled in correctly the TRIM button can be pressed and the process will be carried out.\n"
-									+"A success or failure message will be displayed on screen when the operation is completed.",
+											+ "To select a media file for trimming use the SELECT button. This will open a file chooser where the desired file can be selected.\n"
+											+ "To preview the selected audio file the PREVIEW button, and the file will play in a seperate window .\n"
+											+ "Durations are specified in the start and duration fields. An output file name can also be specified in the appropriate field.\n"
+											+ "After all these fields have been filled in correctly the TRIM button can be pressed and the process will be carried out.\n"
+											+ "A success or failure message will be displayed on screen when the operation is completed.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -232,13 +242,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -256,9 +266,9 @@ public class FunctionalAreaChooser extends JPanel {
 							.showMessageDialog(
 									null,
 									"The upload panel provides the tools to upload the currently playing media (preferably media that you've edited) to the internet and share it with other VAMIX users.\n"
-									+"Pressing the UPLOAD button will take whatever is playing and upload it to the VAMIX server. The time taken can vary depending on your internet connection.\n" +
-									"Once the upload is completed a URL will be generated and this URL can be used to access the uploaded media from any browser or via the download option of VAMIX.\n"+
-									"Pressing the SHARE button will share this link with other VAMIX users, and shared links can be viewed from the advanced options.",
+											+ "Pressing the UPLOAD button will take whatever is playing and upload it to the VAMIX server. The time taken can vary depending on your internet connection.\n"
+											+ "Once the upload is completed a URL will be generated and this URL can be used to access the uploaded media from any browser or via the download option of VAMIX.\n"
+											+ "Pressing the SHARE button will share this link with other VAMIX users, and shared links can be viewed from the advanced options.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -266,13 +276,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -298,11 +308,11 @@ public class FunctionalAreaChooser extends JPanel {
 									"The add title panel provides the tools to add text to the opening of the currently playing video.\n"
 											+ "Entering text in the output name field will send the ouput to a file with the name provided. If this is left as is a default will be selected.\n"
 											+ "Entering a value in the Display Time field determines how long the text will be displayed. Leaving this blank will cause the operation to fail.\n "
-											+"The position selector will determine where on the screen the text will be displayed, either 1/8 of the way down, midway, or 7/8ths of the way.\n"
-											+"The ADD TEXT button will carry out the operation, whereas the PREIVEW button will display a sample in a seperate window.\n"
-											+"Finally, the text field will determine what text will be displayed. Leaving this empty is okay, but nothing will show up.\n"
-											+"More options for customisation are available in the advanced options, including functionality that allows for a vamsets file to be\n"
-											+"created from the current settings or imported, and this can be done using the SAVE and LOAD buttons respecitviely.",
+											+ "The position selector will determine where on the screen the text will be displayed, either 1/8 of the way down, midway, or 7/8ths of the way.\n"
+											+ "The ADD TEXT button will carry out the operation, whereas the PREIVEW button will display a sample in a seperate window.\n"
+											+ "Finally, the text field will determine what text will be displayed. Leaving this empty is okay, but nothing will show up.\n"
+											+ "More options for customisation are available in the advanced options, including functionality that allows for a vamsets file to be\n"
+											+ "created from the current settings or imported, and this can be done using the SAVE and LOAD buttons respecitviely.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -310,13 +320,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -324,7 +334,7 @@ public class FunctionalAreaChooser extends JPanel {
 		textCard.add(_createTitleOption);
 		_createTitleOption.setPreferredSize(new Dimension(optionWidth,
 				optionHeight));
-		
+
 		_createTitleOption.setToolTipText(Strings.TitleTooltip);
 		_createCreditsOption = new OptionButton("Credits",
 				Defaults.DefaultTextColour);
@@ -335,14 +345,14 @@ public class FunctionalAreaChooser extends JPanel {
 							.showMessageDialog(
 									null,
 									"The add credits panel provides the tools to add text to the end of the currently playing video.\n"
-									+"This panel works similarly to add title panel bar when the text displays on the screen.\n"
+											+ "This panel works similarly to add title panel bar when the text displays on the screen.\n"
 											+ "Entering text in the output name field will send the ouput to a file with the name provided. If this is left as is a default will be selected.\n"
 											+ "Entering a value in the Display Time field determines how long the text will be displayed. Leaving this blank will cause the operation to fail.\n "
-											+"The position selector will determine where on the screen the text will be displayed, either 1/8 of the way down, midway, or 7/8ths of the way.\n"
-											+"The ADD TEXT button will carry out the operation, whereas the PREIVEW button will display a sample in a seperate window.\n"
-											+"Finally, the text field will determine what text will be displayed. Leaving this empty is okay, but nothing will show up.\n"
-											+"More options for customisation are available in the advanced options, including functionality that allows for a vamsets file to be\n"
-											+"created from the current settings or imported, and this can be done using the SAVE and LOAD buttons respecitviely.",
+											+ "The position selector will determine where on the screen the text will be displayed, either 1/8 of the way down, midway, or 7/8ths of the way.\n"
+											+ "The ADD TEXT button will carry out the operation, whereas the PREIVEW button will display a sample in a seperate window.\n"
+											+ "Finally, the text field will determine what text will be displayed. Leaving this empty is okay, but nothing will show up.\n"
+											+ "More options for customisation are available in the advanced options, including functionality that allows for a vamsets file to be\n"
+											+ "created from the current settings or imported, and this can be done using the SAVE and LOAD buttons respecitviely.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -350,13 +360,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -380,7 +390,7 @@ public class FunctionalAreaChooser extends JPanel {
 									"The strip audio panel provides the tools to remove the audio from the current video if there is any.\n"
 											+ "This operation can be run on audio files and will be successful however the output will be the same as the input.\n"
 											+ "The STRIP button will check for audio and export any if it is found.\n"
-											+"This process can be cancelled using the CANCEL button. If it is not cancelled a mp3 will be created with the desired name in the desired location.",
+											+ "This process can be cancelled using the CANCEL button. If it is not cancelled a mp3 will be created with the desired name in the desired location.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -388,13 +398,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -413,7 +423,7 @@ public class FunctionalAreaChooser extends JPanel {
 									"The replace panel provides the tools to replace the audio of the current video with that from another file.\n"
 											+ "To select an audio file to replace the current audio with use the SELECT button. This will open a file chooser where the desired file can be selected.\nTo preview the selected audio use the PREVIEW button, and the audio will play in a seperate window .\n"
 											+ "The REPLACE button will take the currently selected audio and begin the swap.\n"
-											+"This process can be cancelled using the CANCEL button. If it is not cancelled a video file will be created with the desired name in the desired location.",
+											+ "This process can be cancelled using the CANCEL button. If it is not cancelled a video file will be created with the desired name in the desired location.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -421,13 +431,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -445,10 +455,10 @@ public class FunctionalAreaChooser extends JPanel {
 							.showMessageDialog(
 									null,
 									"The overlay panel provides the tools to overlay the audio of the current video with that from another file.\n"
-									+ "This works similarly to the replace option however this will merge the current audio in instead of discarding it.\n"
+											+ "This works similarly to the replace option however this will merge the current audio in instead of discarding it.\n"
 											+ "To select an audio file to replace the current audio with use the SELECT button. This will open a file chooser where the desired file can be selected.\nTo preview the selected audio use the PREVIEW button, and the audio will play in a seperate window .\n"
 											+ "The OVERLAY button will take the currently selected audio and begin the merge.\n"
-											+"This process can be cancelled using the CANCEL button. If it is not cancelled a video file will be created with the desired name in the desired location.",
+											+ "This process can be cancelled using the CANCEL button. If it is not cancelled a video file will be created with the desired name in the desired location.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -456,13 +466,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -486,7 +496,7 @@ public class FunctionalAreaChooser extends JPanel {
 									"The extract subtitles panel provides the tools to remove the subtitles from the current video if they so exist.\n"
 											+ "The EXTRACT button will check for subtitles in the current video that are extractable.\n"
 											+ "If none are found a warning will printed to the screen."
-											+"\nOtherwise the subtitles found will be extracted and saved in a .ass file either in the default location or the one selected.",
+											+ "\nOtherwise the subtitles found will be extracted and saved in a .ass file either in the default location or the one selected.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -494,13 +504,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -519,7 +529,7 @@ public class FunctionalAreaChooser extends JPanel {
 									"The add subtitles panel provides the tools to add a pre-existing subtitle file"
 											+ " to the currently playing video.\n The SELECT button brings up a file chooser that can only access .ass subtitle files.\n "
 											+ "The ADD button adds the currently selected .ass file, or one is not selected will prompt for one.\n"
-											+"Once pressed the process will execute, and it can be CANCELed at any time.",
+											+ "Once pressed the process will execute, and it can be CANCELed at any time.",
 									"VAMIX Help", JOptionPane.QUESTION_MESSAGE);
 				}
 
@@ -527,13 +537,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};
@@ -563,13 +573,13 @@ public class FunctionalAreaChooser extends JPanel {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 		};

@@ -17,13 +17,22 @@ import javax.swing.JPanel;
 
 import defaults.Defaults;
 
+@SuppressWarnings("serial")
+/**
+ * This class contains the logic for functionality panel display. The panels are all created,
+ * and a basic string assigned that matches the text on the buttons that should lead to said option.
+ * For example, the AdvancedDownloadArea should be reached first by pressing Download and then Advanced, and
+ * as such the string assigned is "AdvancedDownload".
+ * @author fsta657
+ *
+ */
 public class FunctionalAreaSwitcher extends JPanel {
 	
 	public FunctionalAreaSwitcher(){
 		setPreferredSize(new Dimension(Defaults.DefaultFuncAreaWidth, Defaults.DefaultFuncAreaHeight));
 		setLayout(new CardLayout());
 		
-		// Add audio player first
+		// Add sections with required dependencies.
 		
 		AdvancedDownloadArea ad = new AdvancedDownloadArea();
 		add(ad, "AdvancedDownload");
@@ -70,12 +79,19 @@ public class FunctionalAreaSwitcher extends JPanel {
 		add(new HelpArea(), "BasicHelp");
 		
 		
-		// Switch to chosen
+		// Switch to initial panel.
 		switchPanel("Help","Basic");
 	}
 	
+	/**
+	 * This method takes in the option and level and displays the panel associated with that string combination.
+	 * These associations are initially done when the object is constructed.
+	 * @param option
+	 * @param level
+	 */
 	public void switchPanel(String option, String level){
 	CardLayout cl = (CardLayout) (this.getLayout());
+	// If statement required to accommodate for shared advanced panel.
 	if (option.equals("Credits")&&level.equals("Advanced")){
 		option="Title";
 	}
