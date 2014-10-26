@@ -107,7 +107,7 @@ public class Main extends JFrame {
 		// Combine into panel
 		JPanel videoPanel = new JPanel();
 		videoPanel.setPreferredSize(new Dimension(Defaults.DefaultWindowWidth,
-				Defaults.DefaultBufferHeight * 2 //CAN CHANGE TO 2 OR 1
+				Defaults.DefaultBufferHeight
 						+ Defaults.DefaultMediaPlayerHeight));
 		videoPanel.setLayout(new BoxLayout(videoPanel, BoxLayout.Y_AXIS));
 		videoPanel.add(_vlcPlayer);
