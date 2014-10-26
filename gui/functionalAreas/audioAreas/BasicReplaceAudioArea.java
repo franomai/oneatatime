@@ -27,7 +27,7 @@ import gui.functionalAreas.workers.ReplaceAudioWorker;
 /*
  BASIC:
  URL field 
- Download Button
+Replace Button
  Cancel Button
  Error message (file exists, failed etc)
  */

@@ -27,7 +27,7 @@ import gui.functionalAreas.workers.OverlayWorker;
 /*
  BASIC:
  URL field 
- Download Button
+ Overlay Button
  Cancel Button
  Error message (file exists, failed etc)
  Progress Bar

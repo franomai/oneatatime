@@ -24,7 +24,7 @@ import gui.functionalAreas.workers.StripAudioWorker;
 /*
  BASIC:
  URL field 
- Download Button
+SStrip Button
  Cancel Button
  Error message (file exists, failed etc)
  */
