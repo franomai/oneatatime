@@ -1,6 +1,5 @@
 package gui.functionalAreas.audioAreas;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -19,7 +18,14 @@ import javax.swing.filechooser.FileFilter;
 import defaults.Defaults;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
-
+/**
+ * This class represents the advanced overlay pane. It contains the create method for painting this pane,
+ * some behaviors associated with components in this pane, and methods for accessing fields in this pane from
+ * basic panes, more specifically the basic overlay pane.
+ * @author fsta657
+ *
+ */
+@SuppressWarnings("serial")
 public class AdvancedOverlayAudioArea extends AbstractFunctionalArea implements
 		ActionListener {
 
@@ -140,7 +146,6 @@ public class AdvancedOverlayAudioArea extends AbstractFunctionalArea implements
 				File f = new File(VideoControlArea.location);
 				_fileChooser.setCurrentDirectory(f);
 			}
-			// NEEDS GOOD TEXT
 			_fileChooser.showOpenDialog(this);
 		}
 		// If source is file chooser, update text field
@@ -152,10 +157,18 @@ public class AdvancedOverlayAudioArea extends AbstractFunctionalArea implements
 		}
 	}
 
+	/**
+	 * Get the output name provided by the user for the overlay operation.
+	 * @return Output name as a String.
+	 */
 	public String getOutputName() {
 		return _outputName.getText();
 	}
 
+	/**
+	 * Get the output location provided by the user for the overlay operation.
+	 * @return Output location as a String.
+	 */
 	public String getOutputLocation() {
 		return _outputLoc.getText();
 	}
