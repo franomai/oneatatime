@@ -3,7 +3,16 @@ package gui.functionalAreas.subtitleAreas;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
-// This table model code is an edited version of the code @ http://www.codejava.net/java-se/swing/editable-jtable-example
+/**
+ * This table model code is an edited version of the code @
+ * http://www.codejava.net/java-se/swing/editable-jtable-example. The handles how
+ * the table is displayed in the window associated with BasicCreateSubtitles,
+ * and what elements are editable.
+ * 
+ * @author fsta657
+ * 
+ */
+@SuppressWarnings("serial")
 public class TableModel extends AbstractTableModel
 {
     private final List<Subtitle> subsList;
@@ -11,7 +20,8 @@ public class TableModel extends AbstractTableModel
     private final String[] columnNames = new String[] {
             "Start time", "End time", "Text to display"
     };
-    private final Class[] columnClass = new Class[] {
+    @SuppressWarnings("rawtypes")
+	private final Class[] columnClass = new Class[] {
         String.class, String.class, String.class
     };
  

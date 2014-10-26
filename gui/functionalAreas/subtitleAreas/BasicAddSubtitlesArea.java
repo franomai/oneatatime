@@ -1,13 +1,9 @@
 package gui.functionalAreas.subtitleAreas;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,30 +16,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import defaults.Defaults;
-import gui.MyVLCPlayer;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
 import gui.functionalAreas.workers.AddSubtitlesWorker;
-import gui.functionalAreas.workers.OverlayWorker;
-import gui.functionalAreas.workers.ReplaceAudioWorker;
 
-/*
- BASIC:
- URL field 
- Download Button
- Cancel Button
- Error message (file exists, failed etc)
+/**
+ * This class represents the basic add subtitles pane. It contains the create method for painting this pane,
+ * allowing for a file to be selected and the operation to be carried out. This operation is carried out
+ * by grabbing the values of the fields of AdvancedAddSubtitlesArea and passing them into a worker with fields
+ * from this class and the player. Upon completion error/success is reported via processWorkerResults.
+ * @author fsta657
+ *
  */
-
+@SuppressWarnings("serial")
 public class BasicAddSubtitlesArea extends AbstractFunctionalArea implements
 		ActionListener {
 
 	private JFileChooser _fileChooser;
-	private JTextField _outputName;
 	private JButton _replace;
 	private JTextField _currentFile;
 	private JButton _choose;
@@ -52,7 +44,7 @@ public class BasicAddSubtitlesArea extends AbstractFunctionalArea implements
 	// Worker Fields
 	private AddSubtitlesWorker _worker;
 	// Boolean Fields
-	private boolean _canReplace = true;
+	private boolean _canAdd = true;
 	// Reference Fields
 	private AdvancedAddSubtitlesArea _as;
 
@@ -110,7 +102,7 @@ public class BasicAddSubtitlesArea extends AbstractFunctionalArea implements
 		filePanel.setOpaque(false);
 
 		// Set up progress panel
-		// Create strip button
+		// Create add button
 		_replace = new JButton("Add");
 		_replace.setOpaque(false);
 		_replace.setFont(Defaults.DefaultButtonFont);
@@ -161,9 +153,9 @@ public class BasicAddSubtitlesArea extends AbstractFunctionalArea implements
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// If source was strip button, start strip
+		// If source was add button, start add
 		if (e.getSource().equals(_replace)) {
-			if (_canReplace) {
+			if (_canAdd) {
 				String inVid;
 				if (_currentFile.getText().equals("No file selected")) {
 					JOptionPane.showMessageDialog(null,
@@ -212,7 +204,7 @@ public class BasicAddSubtitlesArea extends AbstractFunctionalArea implements
 
 						if (selected == 0) {
 							// Ready to rock
-							_canReplace = false;
+							_canAdd = false;
 							_progressBar.setIndeterminate(true);
 							_replace.setEnabled(false);
 							_cancel.setEnabled(true);
@@ -222,7 +214,7 @@ public class BasicAddSubtitlesArea extends AbstractFunctionalArea implements
 						}
 					}else{
 						// Ready to rock
-						_canReplace = false;
+						_canAdd = false;
 						_progressBar.setIndeterminate(true);
 						_replace.setEnabled(false);
 						_cancel.setEnabled(true);
@@ -273,8 +265,8 @@ public class BasicAddSubtitlesArea extends AbstractFunctionalArea implements
 			JOptionPane.showMessageDialog(null, "Subtitles successfully added",
 					"VAMIX Success", JOptionPane.INFORMATION_MESSAGE);
 		}
-		// Enable stripping
-		_canReplace = true;
+		// Enable adding
+		_canAdd = true;
 		_replace.setEnabled(true);
 		_cancel.setEnabled(false);
 	}

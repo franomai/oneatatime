@@ -1,14 +1,9 @@
 package gui.functionalAreas.subtitleAreas;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +11,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AttributeSet;
 import javax.swing.JButton;
@@ -25,7 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -37,21 +30,23 @@ import javax.swing.text.PlainDocument;
 import defaults.Defaults;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
-import gui.functionalAreas.audioAreas.AdvancedOverlayAudioArea;
-import gui.functionalAreas.workers.AddSubtitlesWorker;
 import gui.functionalAreas.workers.CreateWorker;
 import gui.functionalAreas.workers.LoadWorker;
 import gui.functionalAreas.workers.StreamWorker;
-import gui.functionalAreas.workers.TrimWorker;
 
-/*
- BASIC:
- URL field 
- Download Button
- Cancel Button
- Error message (file exists, failed etc)
+/**
+ * This class represents the basic create subtitles pane. It contains the create
+ * method for painting this pane, and the view subtitles window associated with
+ * it. it also contains all the logic for both these panes, which includes
+ * loading in subtitles, adding subtitles, creating a subtitle file, and
+ * checking for errors associated with these two processes.
+ * All of these are handled by workers, taking in fields from this class and AdvancedCreateSubtitles
+ * as parameters. Upon completion error/success is reported via processWorkerResults.
+ * 
+ * @author fsta657
+ * 
  */
-
+@SuppressWarnings("serial")
 public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 		ActionListener {
 	private TimeField _startTime;
@@ -68,8 +63,6 @@ public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 	// Worker Fields
 	private CreateWorker _worker;
 	private LoadWorker _worker2;
-	// Boolean Fields
-	private boolean _canTrim = true;
 	private static ArrayList<Subtitle> list;
 	private AdvancedCreateSubtitles _ao;
 
@@ -262,7 +255,7 @@ public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 		_help.setFont(Defaults.DefaultButtonFont);
 		_help.setAlignmentX(Component.CENTER_ALIGNMENT);
 		_help.addActionListener(this);
-		
+
 		_startsTime = new JTextField("00:00:00");
 		_startsTime.setFont(Defaults.DefaultButtonFont);
 		_startsTime.setHorizontalAlignment(JLabel.CENTER);
@@ -311,7 +304,6 @@ public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 			try {
 				test = strim.get();
 			} catch (InterruptedException | ExecutionException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
@@ -320,7 +312,6 @@ public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 						"No video file currently selected", "VAMIX Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
-			
 
 			// Check times are the right length (Special Document handles format
 			// and content)
@@ -435,14 +426,15 @@ public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 			if (list.size() == 0) {
 				JOptionPane.showMessageDialog(null, "No subtitles in list",
 						"VAMIX Error", JOptionPane.ERROR_MESSAGE);
-			} else if (_ao.getOutputName().trim().equals("")){
+			} else if (_ao.getOutputName().trim().equals("")) {
 				JOptionPane.showMessageDialog(this,
 						"Please enter an output file name", "VAMIX Warning",
 						JOptionPane.ERROR_MESSAGE);
-			}else {
+			} else {
 				String outSub;
 				String ext = ".ass";
-				if (_ao.getOutputName().trim().equals("Enter in new output file name")) {
+				if (_ao.getOutputName().trim()
+						.equals("Enter in new output file name")) {
 					outSub = "subs" + ext;
 				} else {
 					outSub = _ao.getOutputName().trim() + ext;
@@ -452,30 +444,32 @@ public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 				}
 				File f = new File(outSub);
 				File q = new File(VideoControlArea.getPath());
-				if (q.getAbsolutePath().equals(f.getAbsolutePath())){
-					JOptionPane.showMessageDialog(null,
-							"Input cannot have the same name as output, please rename.",
-							"VAMIX Error", JOptionPane.ERROR_MESSAGE);
-				}else{
-				if (f.exists()){
-					Object[] options = { "OK", "Cancel" };
-					int selected = JOptionPane
-							.showOptionDialog(
+				if (q.getAbsolutePath().equals(f.getAbsolutePath())) {
+					JOptionPane
+							.showMessageDialog(
 									null,
-									"Warning: the file to be created will overwrite an existing file. Continue?",
-									"Overwrite warning",
-									JOptionPane.DEFAULT_OPTION,
-									JOptionPane.WARNING_MESSAGE, null,
-									options, options[0]);
+									"Input cannot have the same name as output, please rename.",
+									"VAMIX Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					if (f.exists()) {
+						Object[] options = { "OK", "Cancel" };
+						int selected = JOptionPane
+								.showOptionDialog(
+										null,
+										"Warning: the file to be created will overwrite an existing file. Continue?",
+										"Overwrite warning",
+										JOptionPane.DEFAULT_OPTION,
+										JOptionPane.WARNING_MESSAGE, null,
+										options, options[0]);
 
-					if (selected == 0) {
+						if (selected == 0) {
+							_worker = new CreateWorker(outSub, list, this);
+							_worker.execute();
+						}
+					} else {
 						_worker = new CreateWorker(outSub, list, this);
 						_worker.execute();
 					}
-				}else{
-					_worker = new CreateWorker(outSub, list, this);
-					_worker.execute();
-				}
 				}
 			}
 		}
@@ -491,13 +485,14 @@ public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
 					".ass subtitle files", "ass");
 			_fileChooser.setFileFilter(filter);
-			if (!VideoControlArea.location.equals("none")){
+			if (!VideoControlArea.location.equals("none")) {
 				File f = new File(VideoControlArea.location);
 				_fileChooser.setCurrentDirectory(f);
 			}
 			_fileChooser.showOpenDialog(this);
 			if (_fileChooser.getSelectedFile() != null) {
-				VideoControlArea.location = _fileChooser.getSelectedFile().getPath();
+				VideoControlArea.location = _fileChooser.getSelectedFile()
+						.getPath();
 				_worker2 = new LoadWorker(_fileChooser.getSelectedFile()
 						.getPath());
 				_worker2.execute();
@@ -553,7 +548,6 @@ public class BasicCreateSubtitles extends AbstractFunctionalArea implements
 		return num;
 	}
 
-	@SuppressWarnings("serial")
 	// This special JTextField ensures its model is a special TimeFormayDocument
 	class TimeField extends JTextField {
 		public TimeField() {

@@ -2,11 +2,17 @@ package gui.functionalAreas.subtitleAreas;
 
 import gui.VideoControlArea;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
+/**
+ * This simple class is used to represent a subtitle. It consists a start time, end time
+ * and a String to be displayed on screen. Errors that could occur when adding subtitles
+ * (such as times overlapping) are avoiding by the error checking in the setters of this class.
+ * @author fsta657
+ *
+ */
 public class Subtitle {
 	private String start;
 	private String end;
