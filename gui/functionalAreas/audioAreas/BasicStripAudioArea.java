@@ -1,13 +1,8 @@
 package gui.functionalAreas.audioAreas;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,21 +10,14 @@ import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTextField;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import defaults.Defaults;
-import gui.MyVLCPlayer;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
-import gui.functionalAreas.textAreas.AdvancedAddTextArea;
-import gui.functionalAreas.workers.OverlayWorker;
 import gui.functionalAreas.workers.StreamWorker;
 import gui.functionalAreas.workers.StripAudioWorker;
 
@@ -41,6 +29,15 @@ import gui.functionalAreas.workers.StripAudioWorker;
  Error message (file exists, failed etc)
  */
 
+/**
+ * This class represents the basic strip pane. It contains the create method for painting this pane,
+ * allowing for a file to be selected and the operation to be carried out. This operation is carried out
+ * by grabbing the values of the fields of AdvancedStripArea and passing them into a worker with fields
+ * from the player. Upon completion error/success is reported via processWorkerResults.
+ * @author fsta657
+ *
+ */
+@SuppressWarnings("serial")
 public class BasicStripAudioArea extends AbstractFunctionalArea implements
 		ActionListener {
 
@@ -134,8 +131,6 @@ public class BasicStripAudioArea extends AbstractFunctionalArea implements
 							JOptionPane.ERROR_MESSAGE);
 				}else {
 					String outVideo;
-					String[] arr = inVid.split("\\.");
-					String ext = "." + arr[arr.length - 1];
 					if (_as.getOutputName().trim().equals(
 							"Enter in new output file name")) {
 						outVideo = "output.mp3";
@@ -152,7 +147,6 @@ public class BasicStripAudioArea extends AbstractFunctionalArea implements
 				try {
 					test = strim.get();
 				} catch (InterruptedException | ExecutionException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				if (test.equals("0,0")|test.equals("0,1")){

@@ -1,13 +1,8 @@
 package gui.functionalAreas.audioAreas;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,10 +20,8 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import defaults.Defaults;
-import gui.MyVLCPlayer;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
-import gui.functionalAreas.workers.OverlayWorker;
 import gui.functionalAreas.workers.ReplaceAudioWorker;
 
 /*
@@ -39,11 +32,19 @@ import gui.functionalAreas.workers.ReplaceAudioWorker;
  Error message (file exists, failed etc)
  */
 
+/**
+ * This class represents the basic replace pane. It contains the create method for painting this pane,
+ * allowing for a file to be selected and the operation to be carried out. This operation is carried out
+ * by grabbing the values of the fields of AdvancedReplaceArea and passing them into a worker with fields
+ * from this class and the player. Upon completion error/success is reported via processWorkerResults.
+ * @author fsta657
+ *
+ */
+@SuppressWarnings("serial")
 public class BasicReplaceAudioArea extends AbstractFunctionalArea implements
 		ActionListener {
 
 	private JFileChooser _fileChooser;
-	private JTextField _outputName;
 	private JButton _replace;
 	private JTextField _currentFile;
 	private JButton _choose;
@@ -117,7 +118,7 @@ public class BasicReplaceAudioArea extends AbstractFunctionalArea implements
 		filePanel.setOpaque(false);
 
 		// Set up progress panel
-		// Create strip button
+		// Create replace button
 		_replace = new JButton("Replace");
 		_replace.setOpaque(false);
 		_replace.setFont(Defaults.DefaultButtonFont);
@@ -168,7 +169,7 @@ public class BasicReplaceAudioArea extends AbstractFunctionalArea implements
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// If source was strip button, start strip
+		// If source was replace button, start replace
 		if (e.getSource().equals(_replace)) {
 			if (_canReplace) {
 				String inVid;
@@ -268,7 +269,6 @@ public class BasicReplaceAudioArea extends AbstractFunctionalArea implements
 				try {
 					builder.start();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -292,7 +292,7 @@ public class BasicReplaceAudioArea extends AbstractFunctionalArea implements
 			JOptionPane.showMessageDialog(null, "Audio successfully replaced",
 					"VAMIX Success", JOptionPane.INFORMATION_MESSAGE);
 		}
-		// Enable stripping
+		// Enable replacing
 		_canReplace = true;
 		_progressBar.setIndeterminate(false);
 		_replace.setEnabled(true);

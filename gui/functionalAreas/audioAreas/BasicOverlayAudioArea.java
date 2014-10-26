@@ -171,7 +171,7 @@ public class BasicOverlayAudioArea extends AbstractFunctionalArea implements
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// If source was strip button, start strip
+		// If source was overlay button, start overlay
 		if (e.getSource().equals(_overlay)) {
 			if (_canOverlay) {
 				String inVid;
@@ -293,7 +293,7 @@ public class BasicOverlayAudioArea extends AbstractFunctionalArea implements
 			JOptionPane.showMessageDialog(null, "Audio successfully overlaid",
 					"VAMIX Success", JOptionPane.INFORMATION_MESSAGE);
 		}
-		// Enable stripping
+		// Enable overlaying
 		_canOverlay = true;
 		_progressBar.setIndeterminate(false);
 		_overlay.setEnabled(true);
