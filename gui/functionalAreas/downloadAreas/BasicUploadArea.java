@@ -1,48 +1,39 @@
 package gui.functionalAreas.downloadAreas;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import defaults.Defaults;
-import gui.MyVLCPlayer;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
-import gui.functionalAreas.textAreas.AdvancedAddTextArea;
-import gui.functionalAreas.workers.GetCreationsWorker;
-import gui.functionalAreas.workers.OverlayWorker;
-import gui.functionalAreas.workers.StreamWorker;
-import gui.functionalAreas.workers.StripAudioWorker;
 import gui.functionalAreas.workers.UploadChanges;
 import gui.functionalAreas.workers.UploadWorker;
 
-/*
- BASIC:
- URL field 
- Download Button
- Cancel Button
- Error message (file exists, failed etc)
+/**
+ * This class represents the basic upload pane. This class is unique in that
+ * it is not used by any other classes. Rather, this pane
+ * takes in the current media file and uploads it, and after that provides the option to
+ * share it with other VAMIX users. This upload and sharing is handled by UploadWorker
+ * and UploadChanges respectively. After an upload a message is printed to the screen,
+ * either success or failure depending on the success or failure of the upload.
+ * 
+ * @author fsta657
+ * 
  */
 
+@SuppressWarnings("serial")
 public class BasicUploadArea extends AbstractFunctionalArea implements
 		ActionListener {
 
@@ -57,7 +48,6 @@ public class BasicUploadArea extends AbstractFunctionalArea implements
 	private String last = "";
 	// Boolean Fields
 	private boolean _canStrip = true;
-	private GetCreationsWorker ohsnap;
 
 	public BasicUploadArea() {
 	}
@@ -191,7 +181,6 @@ public class BasicUploadArea extends AbstractFunctionalArea implements
 			try {
 				_text.setText("http://a.pomf.se/" + _worker.get());
 			} catch (InterruptedException | ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// Otherwise success

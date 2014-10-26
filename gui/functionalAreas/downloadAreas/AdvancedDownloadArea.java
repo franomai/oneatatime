@@ -1,6 +1,5 @@
 package gui.functionalAreas.downloadAreas;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,12 +14,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import defaults.Defaults;
 import gui.VideoControlArea;
 import gui.functionalAreas.AbstractFunctionalArea;
 
+
+/**
+ * This class represents the advanced download pane. It contains the create method for painting this pane,
+ * some behaviors associated with components in this pane, and methods for accessing fields in this pane from
+ * basic panes, more specifically the basic download pane.
+ * @author fsta657
+ *
+ */
+@SuppressWarnings("serial")
 public class AdvancedDownloadArea extends AbstractFunctionalArea implements
 		ActionListener {
 
@@ -141,7 +148,6 @@ public class AdvancedDownloadArea extends AbstractFunctionalArea implements
 				File f = new File(VideoControlArea.location);
 				_fileChooser.setCurrentDirectory(f);
 			}
-			// NEEDS GOOD TEXT
 			_fileChooser.showOpenDialog(this);
 		}
 		// If source is file chooser, update text field
@@ -153,11 +159,17 @@ public class AdvancedDownloadArea extends AbstractFunctionalArea implements
 		}
 
 	}
-
+	/**
+	 * Get the output name provided by the user for the download operation.
+	 * @return Output name as a String.
+	 */
 	public String getOutputName() {
 		return _outputName.getText();
 	}
-
+	/**
+	 * Get the output location provided by the user for the download operation.
+	 * @return Output location as a String.
+	 */
 	public String getOutputLocation() {
 		return _outputLoc.getText();
 	}

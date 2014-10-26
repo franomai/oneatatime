@@ -42,8 +42,14 @@ public abstract class AbstractFunctionalArea extends JPanel {
 		this.add(_frontPanel);
 	}
     
-	// Must be implemented in extending classes to ensure correct behaviour
+	// Must be implemented in extending classes to ensure correct behavior
 	// throughout the GUI.
+	/**
+	 * Takes in an exit status from a worker and generally speaking
+	 * should be implemented so as to display a message to the user indicating
+	 * the success/failure of the given operation.
+	 * @param exitStatus
+	 */
 	public abstract void processWorkerResults(int exitStatus);
 
 	protected abstract JPanel createAreaSpecific();

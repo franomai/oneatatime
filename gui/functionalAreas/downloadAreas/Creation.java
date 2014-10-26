@@ -1,5 +1,11 @@
 package gui.functionalAreas.downloadAreas;
 
+/**
+ * This simple class is used to represent a users creation. It consists of a link to their
+ * creation and the description that accompanies it.
+ * @author fsta657
+ *
+ */
 public class Creation {
 	private String desc;
 	private String link;

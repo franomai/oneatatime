@@ -1,13 +1,8 @@
 package gui.functionalAreas.downloadAreas;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +16,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -39,6 +33,17 @@ import gui.functionalAreas.workers.TrimWorker;
  Error message (file exists, failed etc)
  */
 
+/**
+ * This class represents the basic trim pane. It contains the create method for
+ * painting this pane, allowing for a file to be selected and the trim to be carried out. 
+ * This operation is executed by passing the values from this
+ * pane into a worker and running it. Upon completion error/success is reported
+ * via processWorkerResults.
+ * 
+ * @author fsta657
+ * 
+ */
+@SuppressWarnings("serial")
 public class BasicTrimArea extends AbstractFunctionalArea implements
 		ActionListener {
 
@@ -53,7 +58,6 @@ public class BasicTrimArea extends AbstractFunctionalArea implements
 	// Worker Fields
 	private TrimWorker _worker;
 	// Boolean Fields
-	private boolean _canTrim = true;
 
 	public BasicTrimArea() {
 		super();
@@ -61,8 +65,8 @@ public class BasicTrimArea extends AbstractFunctionalArea implements
 
 	@Override
 	protected JPanel createAreaSpecific() {
-		
-		//Set up file chooser
+
+		// Set up file chooser
 		_fileChooser = new JFileChooser();
 		_fileChooser.addActionListener(this);
 
@@ -85,13 +89,13 @@ public class BasicTrimArea extends AbstractFunctionalArea implements
 		_choose.setFont(Defaults.DefaultButtonFont);
 		_choose.setAlignmentX(Component.CENTER_ALIGNMENT);
 		_choose.addActionListener(this);
-		
+
 		_preview = new JButton("Preview");
 		_preview.setOpaque(false);
 		_preview.setFont(Defaults.DefaultButtonFont);
 		_preview.setAlignmentX(Component.CENTER_ALIGNMENT);
 		_preview.addActionListener(this);
-		
+
 		// Combine into sub panel
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
@@ -185,7 +189,7 @@ public class BasicTrimArea extends AbstractFunctionalArea implements
 		p4.setOpaque(false);
 		// Combine into all sub panel
 		JPanel p5 = new JPanel();
-		p5.setLayout(new FlowLayout(FlowLayout.LEFT,0, 0));
+		p5.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		p5.add(p2);
 		p5.add(p3);
 		p5.add(p4);
@@ -228,21 +232,22 @@ public class BasicTrimArea extends AbstractFunctionalArea implements
 			}
 			// Check times are the right length (Special Document handles format
 			// and content)
-			else if (_outputName.getText().equals("")){
+			else if (_outputName.getText().equals("")) {
 				JOptionPane.showMessageDialog(this,
 						"Please enter an output file name", "VAMIX Warning",
 						JOptionPane.ERROR_MESSAGE);
-			}
-			else if (!(_startTime.getText().length() == 8 && _stopTime.getText()
-					.length() == 8)) {
+			} else if (!(_startTime.getText().length() == 8 && _stopTime
+					.getText().length() == 8)) {
 				// Tell user they have to enter a time
 				JOptionPane.showMessageDialog(this,
 						"Complete start/stop times", "VAMIX Warning",
 						JOptionPane.ERROR_MESSAGE);
 			}
 			// Double check time formats
-			else if (!_startTime.getText().matches("[0-9][0-9][:][0-9][0-9][:][0-9][0-9]")
-					|| !_stopTime.getText().matches("[0-9][0-9][:][0-9][0-9][:][0-9][0-9]")) {
+			else if (!_startTime.getText().matches(
+					"[0-9][0-9][:][0-9][0-9][:][0-9][0-9]")
+					|| !_stopTime.getText().matches(
+							"[0-9][0-9][:][0-9][0-9][:][0-9][0-9]")) {
 				// Tell user they have to enter a time correctly
 				JOptionPane.showMessageDialog(this,
 						"Complete start/stop times correctly", "VAMIX Warning",
@@ -266,46 +271,42 @@ public class BasicTrimArea extends AbstractFunctionalArea implements
 
 			else {
 				// Prevent user from starting extraction again
-				
-				
+
 				_trim.setEnabled(false);
-				_canTrim=false;
 				String[] arr = _currentFile.getText().split("\\.");
 				String ext = "." + arr[arr.length - 1];
 				String[] arr2 = _outputName.getText().split("\\.");
 				// Then create worker and start process
 				_worker = new TrimWorker(_currentFile.getText(),
-						_startTime.getText(), _stopTime.getText(),
-						arr2[0] + ext, this);
+						_startTime.getText(), _stopTime.getText(), arr2[0]
+								+ ext, this);
 				_worker.execute();
 			}
 		}
 		// If source is button to open file chooser, open the chooser
 		else if (e.getSource().equals(_choose)) {
-			FileFilter filter = new FileNameExtensionFilter("Media", "mp4", "mpeg", "mov", "wmv", "mpg", "mp3",
-					"wav","mkv", "avi");
+			FileFilter filter = new FileNameExtensionFilter("Media", "mp4",
+					"mpeg", "mov", "wmv", "mpg", "mp3", "wav", "mkv", "avi");
 			_fileChooser.setFileFilter(filter);
 			_fileChooser.showOpenDialog(this);
 		}
 		// If source is file chooser, update text field
 		else if (e.getSource().equals(_fileChooser)) {
 			if (_fileChooser.getSelectedFile() != null) {
-				_currentFile.setText(_fileChooser.getSelectedFile()
-						.getPath());
+				_currentFile.setText(_fileChooser.getSelectedFile().getPath());
 			}
-		}
-		else if (e.getSource().equals(_preview)) {
+		} else if (e.getSource().equals(_preview)) {
 			if (_currentFile.getText().equals("No file selected")
 					|| _currentFile.getText().isEmpty()) {
 				// Tell user they have to enter a file
 				JOptionPane.showMessageDialog(this, "Enter a file",
 						"VAMIX Warning", JOptionPane.ERROR_MESSAGE);
-			}else{
-				ProcessBuilder builder = new ProcessBuilder("vlc", _currentFile.getText());
+			} else {
+				ProcessBuilder builder = new ProcessBuilder("vlc",
+						_currentFile.getText());
 				try {
 					builder.start();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -331,7 +332,6 @@ public class BasicTrimArea extends AbstractFunctionalArea implements
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 		// Enable extraction
-		_canTrim=true;
 		_trim.setEnabled(true);
 	}
 

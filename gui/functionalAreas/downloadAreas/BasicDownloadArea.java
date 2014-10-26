@@ -1,19 +1,11 @@
 package gui.functionalAreas.downloadAreas;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,10 +15,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
 import defaults.Defaults;
-import gui.MyVLCPlayer;
 import gui.functionalAreas.AbstractFunctionalArea;
 import gui.functionalAreas.workers.DownloadWorker;
-import gui.functionalAreas.workers.DurationWorker;
 
 /*
  BASIC:
@@ -36,6 +26,15 @@ import gui.functionalAreas.workers.DurationWorker;
  Error message (file exists, failed etc)
  */
 
+/**
+ * This class represents the basic download pane. It contains the create method for painting this pane,
+ * allowing for a URL to be entered and the download to be carried out. This operation is carried out
+ * by grabbing the values of the fields of AdvancedDownloadArea and passing them into a worker with fields
+ * from this class and the player. Upon completion error/success is reported via processWorkerResults.
+ * @author fsta657
+ *
+ */
+@SuppressWarnings("serial")
 public class BasicDownloadArea extends AbstractFunctionalArea implements
 		ActionListener {
 
