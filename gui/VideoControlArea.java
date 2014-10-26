@@ -1,8 +1,6 @@
 package gui;
 
 import gui.functionalAreas.AbstractFunctionalArea;
-import gui.functionalAreas.workers.DurationWorker;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,17 +10,11 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ExecutionException;
-
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -38,6 +30,18 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 import defaults.Defaults;
 
+/**
+ * This class represents the entirety of the Video Control Area, i.e, all the
+ * buttons that control the VLC player. Although there are many components the
+ * layout of this class is relatively simple - create component, define the
+ * behavior for it and add it. Some public methods are defined to allow for ease
+ * of access from other classes which rely on information about the currently
+ * playing media.
+ * 
+ * @author fsta657
+ * 
+ */
+@SuppressWarnings("serial")
 public class VideoControlArea extends JPanel implements ActionListener {
 
 	// GUI Fields
@@ -63,36 +67,65 @@ public class VideoControlArea extends JPanel implements ActionListener {
 	// Timer fields
 	private Timer time1 = null;
 	private static long duration = 0;
-	private Timer checkVidya = null;
+	private Timer updateTimerDisplay = null;
 	private boolean isChangingTime = false;
 	private final long timeLength = 9001;
 	private int isMutePushed = 0;
 	// Flags
 	private boolean _isDone = false;
-	private boolean iscalling = false;
-	
-	
+	private boolean _iscalling = false;
 
-
+	/**
+	 * Sets the video to control, and creates and shows the buttons that will
+	 * control it.
+	 * 
+	 * @param player
+	 */
 	public VideoControlArea(MyVLCPlayer player) {
-
 		_player = player;
 		createAndShowGUI();
-
 	}
 
+	/**
+	 * Returns a String containing the path to the current video being played.
+	 * Can be used for error checking or sourcing for use in functionality.
+	 * 
+	 * @return String containing the absolute path to the currently playing
+	 *         media
+	 */
 	public static String getPath() {
 		return videoPath;
 	}
 
+	/**
+	 * Sets the String provided to be the path to the video playing. What this
+	 * effectively entails is that whatever path is set will correspond to the
+	 * media played if a refresh is invoked. The method is generally unused
+	 * however if one wished to play an output of a function it could be done
+	 * with help from this command.
+	 * 
+	 * @param path
+	 */
 	public static void setPath(String path) {
 		videoPath = path;
 	}
 
+	/**
+	 * Returns the duration of the current media. This method is mainly used for
+	 * error checking of functionality.
+	 * 
+	 * @return Duration in milliseconds of the currently playing media
+	 */
 	public static long getDuration() {
 		return duration;
 	}
-	
+
+	/**
+	 * Returns the current play back time as a formatted String by getting the
+	 * text of the updating label.
+	 * 
+	 * @return Current time as a ##:##:## formatted string.
+	 */
 	public static String getCurrent() {
 		return _showTime.getText();
 	}
@@ -138,8 +171,6 @@ public class VideoControlArea extends JPanel implements ActionListener {
 		// Create transparent panel to add buttons to
 		JPanel contentPanel = new JPanel();
 		contentPanel.setOpaque(false);
-		// contentPanel.setLayout(new BoxLayout(contentPanel,
-		// BoxLayout.Y_AXIS));
 		contentPanel.setLayout(new BorderLayout());
 
 		// Create front panel for non-slider things
@@ -243,37 +274,37 @@ public class VideoControlArea extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if (_time.isEnabled()&&!_isDone){
-				isChangingTime = true;
-				Point p = e.getPoint();
-				double percent = p.x / ((double) 375);// getWidth());
-				int range = _time.getMaximum() - _time.getMinimum();
-				double newVal = range * percent;
-				int result = (int) (_time.getMinimum() + newVal);
-				_time.setValue(result);
+				if (_time.isEnabled() && !_isDone) {
+					isChangingTime = true;
+					Point p = e.getPoint();
+					double percent = p.x / ((double) 375);// getWidth());
+					int range = _time.getMaximum() - _time.getMinimum();
+					double newVal = range * percent;
+					int result = (int) (_time.getMinimum() + newVal);
+					_time.setValue(result);
 				}
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if (_time.isEnabled()&&!_isDone){
-				EmbeddedMediaPlayer p = _player.getMediaPlayer();
-				p.setTime((long) (((double) (_time.getValue()) / timeLength) * duration));
-				_showTime.updateTime(_player.getMediaPlayer().getTime());
+				if (_time.isEnabled() && !_isDone) {
+					EmbeddedMediaPlayer p = _player.getMediaPlayer();
+					p.setTime((long) (((double) (_time.getValue()) / timeLength) * duration));
+					_showTime.updateTime(_player.getMediaPlayer().getTime());
 
-				isChangingTime = false;
+					isChangingTime = false;
 				}
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+				// Unrequired and hence left blank.
 
 			}
 
@@ -308,6 +339,9 @@ public class VideoControlArea extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		EmbeddedMediaPlayer p = _player.getMediaPlayer();
+		// The below essentially handles ff/rw by setting timers to perform skips frequently, and
+		// the GUI is updated to reflect the changes brought upon by these skips. 
+		// Flags are set to indicate to other components if ff/rw is occuring.
 		if (e.getSource().equals(_ff)) {
 			if (!p.isMute()) {
 				p.mute();
@@ -510,10 +544,9 @@ public class VideoControlArea extends JPanel implements ActionListener {
 				// Set filter
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(
 						"Media", "mp4", "mpeg", "mov", "wmv", "mpg", "mp3",
-						"wav","mkv", "avi"
-						);
+						"wav", "mkv", "avi");
 				_chooser.setFileFilter(filter);
-				if (!location.equals("none")){
+				if (!location.equals("none")) {
 					File f = new File(location);
 					_chooser.setCurrentDirectory(f);
 				}
@@ -545,8 +578,8 @@ public class VideoControlArea extends JPanel implements ActionListener {
 						ffrate = -1;
 						rwrate = -1;
 					}
-					checkVidya = new Timer();
-					checkVidya.scheduleAtFixedRate(new TimerTask() {
+					updateTimerDisplay = new Timer();
+					updateTimerDisplay.scheduleAtFixedRate(new TimerTask() {
 
 						@Override
 						public void run() {
@@ -557,9 +590,9 @@ public class VideoControlArea extends JPanel implements ActionListener {
 										.getMediaPlayer().getTime()) / duration * timeLength));
 								_showTime.updateTime(_player.getMediaPlayer()
 										.getTime());
-								iscalling = true;
+								_iscalling = true;
 								_showDur.updateTime(duration);
-								iscalling = false;
+								_iscalling = false;
 							}
 						}
 					}, 0, 250);
@@ -578,7 +611,8 @@ public class VideoControlArea extends JPanel implements ActionListener {
 					p.mute();
 				}
 				ffrate = -1;
-				rwrate = -1;;
+				rwrate = -1;
+				;
 			}
 			_isDone = false;
 			_play.setEnabled(true);
@@ -622,7 +656,9 @@ public class VideoControlArea extends JPanel implements ActionListener {
 		}
 
 		public void updateTime(long milliseconds) {
-			if (milliseconds >= _player.getMediaPlayer().getLength() - (long) 500 && iscalling != true) {
+			if (milliseconds >= _player.getMediaPlayer().getLength()
+					- (long) 500
+					&& _iscalling != true) {
 				milliseconds = duration;
 				_isDone = true;
 				_play.setEnabled(false);
@@ -631,7 +667,7 @@ public class VideoControlArea extends JPanel implements ActionListener {
 				_sound.setEnabled(false);
 				_volume.setEnabled(false);
 				_time.setEnabled(false);
-				
+
 				// Convert to correct ints
 				int seconds = (int) (milliseconds / 1000) % 60;
 				int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
