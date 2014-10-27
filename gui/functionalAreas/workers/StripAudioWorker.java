@@ -9,16 +9,22 @@ import java.io.InputStreamReader;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that strips the audio from a video file
+ * by discarding all video streams and passing whatever is left to an output
+ * file. Note this method has not been tested for videos containing subtitles.
+ * 
+ * @author fsta657
+ * 
+ */
 public class StripAudioWorker extends SwingWorker<Void, Integer> {
 	private int exitcode;
 	private String inFile;
 	private String outFile;
 	private AbstractFunctionalArea area;
 
-	// Takes in -->address<-- of video file and output file name -->with the
-	// extension<---.
-
-	public StripAudioWorker(String inFile, String outFile, AbstractFunctionalArea area) {
+	public StripAudioWorker(String inFile, String outFile,
+			AbstractFunctionalArea area) {
 		this.inFile = inFile;
 		this.outFile = outFile;
 		this.area = area;
@@ -28,8 +34,8 @@ public class StripAudioWorker extends SwingWorker<Void, Integer> {
 	protected Void doInBackground() {
 		ProcessBuilder builder;
 		// -vn says disregard audio strim, -y forces override.
-		builder = new ProcessBuilder("avconv", "-i", inFile, "-ac", "2",
-				"-vn", "-y","-strict", "experimental", outFile);
+		builder = new ProcessBuilder("avconv", "-i", inFile, "-ac", "2", "-vn",
+				"-y", "-strict", "experimental", outFile);
 		builder.redirectErrorStream(true);
 		try {
 			Process process = builder.start();
@@ -38,10 +44,10 @@ public class StripAudioWorker extends SwingWorker<Void, Integer> {
 					new InputStreamReader(stdout));
 			String line = null;
 			while ((line = stdoutBuffered.readLine()) != null) {
-				if (this.isCancelled()){
+				if (this.isCancelled()) {
 					process.destroy();
-				}else{
-				System.out.println(line);
+				} else {
+					System.out.println(line);
 				}
 			}
 			exitcode = process.waitFor();
@@ -54,7 +60,7 @@ public class StripAudioWorker extends SwingWorker<Void, Integer> {
 
 	@Override
 	protected void done() {
-		if (this.isCancelled()){
+		if (this.isCancelled()) {
 			exitcode = 9001;
 		}
 		area.processWorkerResults(exitcode);

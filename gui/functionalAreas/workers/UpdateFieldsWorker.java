@@ -13,6 +13,14 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that reads in a given vamsets file, adds
+ * each line to an array and then the appropriate segments of the array are
+ * passed to the appropriate panels.
+ * 
+ * @author fsta657
+ * 
+ */
 public class UpdateFieldsWorker extends SwingWorker<Integer, Void> {
 
 	private BasicAddCreditsArea _bc;
@@ -25,10 +33,10 @@ public class UpdateFieldsWorker extends SwingWorker<Integer, Void> {
 		_bc = bc;
 		_bt = bt;
 		_at = at;
-		_path=path;
+		_path = path;
 	}
-	
-	protected void done(){
+
+	protected void done() {
 		try {
 			_at.processWorkerResults(get());
 		} catch (InterruptedException | ExecutionException e) {
@@ -44,7 +52,7 @@ public class UpdateFieldsWorker extends SwingWorker<Integer, Void> {
 		try {
 			br = new BufferedReader(new FileReader(file));
 			String line;
-			while ((line = br.readLine())!=null){
+			while ((line = br.readLine()) != null) {
 				array.add(line);
 			}
 			br.close();
@@ -52,7 +60,7 @@ public class UpdateFieldsWorker extends SwingWorker<Integer, Void> {
 			// Exit with status 1 to indicate error
 			return 1;
 		}
-		
+
 		ArrayList<String> bc = new ArrayList<String>(array.subList(0, 4));
 		_bc.setFields(bc);
 		ArrayList<String> bt = new ArrayList<String>(array.subList(4, 8));

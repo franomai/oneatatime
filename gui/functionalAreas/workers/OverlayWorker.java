@@ -10,15 +10,20 @@ import java.io.InputStreamReader;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that overlays an audio file with another file,
+ * by first taking the audio streams from both inputs and combining them into one.
+ * This combined stream is then passed into the output a long with the video stream
+ * if it so exists. 
+ * @author fsta657
+ * 
+ */
 public class OverlayWorker extends SwingWorker<Void, Integer> {
 	private int exitcode;
 	private String inAudio;
 	private String inFile;
 	private String outFile;
 	private AbstractFunctionalArea area;
-
-	// Takes in -->address<-- of the audio file and the -->address<-- of video
-	// file and output file name -->with the extension<---.
 
 	public OverlayWorker(String inFile, String inAudio, String outFile,
 			AbstractFunctionalArea area) {

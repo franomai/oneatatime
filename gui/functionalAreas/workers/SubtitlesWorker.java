@@ -8,12 +8,20 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that figures out whether an input
+ * contains a subtitle stream by passing the input into avprobe and parsing
+ * these results. If a stream is found the ID of the stream is returned,
+ * otherwise the return value is -1.
+ * 
+ * @author fsta657
+ * 
+ */
 public class SubtitlesWorker extends SwingWorker<Integer, Void> {
 	private int exitcode;
 	private String inFile;
 	private int strim = -1;
 	private int setter = 0;
-	// Takes in -->address<-- of video file
 
 	public SubtitlesWorker(String inFile) {
 		this.inFile = inFile;

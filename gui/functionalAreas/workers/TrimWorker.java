@@ -8,6 +8,14 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that trims a given input file using the
+ * start and duration flags provided by avconv. Some error checking is also done
+ * prior to extraction.
+ * 
+ * @author fsta657
+ * 
+ */
 public class TrimWorker extends SwingWorker<Integer, Integer> {
 
 	private String _startTime;
@@ -76,8 +84,8 @@ public class TrimWorker extends SwingWorker<Integer, Integer> {
 		 * EXTRACTION SECTION
 		 */
 		// If all correct, start extraction process
-		builder = new ProcessBuilder("avconv", "-i", _fileName,"-c","copy", "-ss",
-				_startTime, "-t", _endTime, _outputName);
+		builder = new ProcessBuilder("avconv", "-i", _fileName, "-c", "copy",
+				"-ss", _startTime, "-t", _endTime, _outputName);
 		try {
 			// Start process
 			Process process = builder.start();

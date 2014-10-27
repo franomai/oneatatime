@@ -11,14 +11,19 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that uploads to my personal server. The
+ * Linux Curl command is used to interface with the php page at the website, and
+ * the output from this page is parsed and fed back into the GUI.
+ * 
+ * @author fsta657
+ * 
+ */
 public class UploadWorker extends SwingWorker<String, Integer> {
 	private int exitcode = 1;
 	private String inFile;
 	private String out = "Error encountered!";
 	private AbstractFunctionalArea area;
-
-	// Takes in -->address<-- of video file and output file name -->with the
-	// extension<---.
 
 	public UploadWorker(String inFile, AbstractFunctionalArea area) {
 		this.inFile = inFile;
@@ -28,8 +33,8 @@ public class UploadWorker extends SwingWorker<String, Integer> {
 	@Override
 	protected String doInBackground() {
 		ProcessBuilder builder;
-		//PRAY TO GOD
-		builder = new ProcessBuilder("curl", "http://pomf.se/upload.php", "-F", "files[]=@"+inFile);
+		builder = new ProcessBuilder("curl", "http://pomf.se/upload.php", "-F",
+				"files[]=@" + inFile);
 		builder.redirectErrorStream(true);
 		try {
 			Process process = builder.start();
@@ -39,15 +44,15 @@ public class UploadWorker extends SwingWorker<String, Integer> {
 			String line = null;
 			while ((line = stdoutBuffered.readLine()) != null) {
 				System.out.println(line);
-				if (line.contains("\"success\":true")){
+				if (line.contains("\"success\":true")) {
 					exitcode = 0;
 					String[] arr = line.split(",");
-					for (int i = 0; i < arr.length; i++){
-						if(arr[i].contains("url") && !arr[i].contains("name")){
-					String[] arr2 = arr[i].split("\"");
-			out = arr2[3];				
-				}
-			}
+					for (int i = 0; i < arr.length; i++) {
+						if (arr[i].contains("url") && !arr[i].contains("name")) {
+							String[] arr2 = arr[i].split("\"");
+							out = arr2[3];
+						}
+					}
 				}
 			}
 			process.waitFor();

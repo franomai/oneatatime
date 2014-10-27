@@ -14,6 +14,14 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that reads in all the parameters from
+ * the three panels and writes these to a vamsets file. This process is
+ * essentially the reverse of that done by the UpdateFiledsWorker.
+ * 
+ * @author fsta657
+ * 
+ */
 public class WriteSaveWorker extends SwingWorker<Integer, Void> {
 
 	private BasicAddCreditsArea _bc;
@@ -26,8 +34,8 @@ public class WriteSaveWorker extends SwingWorker<Integer, Void> {
 		_bt = bt;
 		_at = at;
 	}
-	
-	protected void done(){
+
+	protected void done() {
 		try {
 			_at.processWorkerResults(get());
 		} catch (InterruptedException | ExecutionException e) {
@@ -54,14 +62,14 @@ public class WriteSaveWorker extends SwingWorker<Integer, Void> {
 				// Inform user of error
 				return 1;
 			}
-		}else{
+		} else {
 			f.delete();
 			f.createNewFile();
 		}
 		PrintWriter out;
 		try {
-			out = new PrintWriter(new BufferedWriter(
-					new FileWriter(fileName, true)));
+			out = new PrintWriter(new BufferedWriter(new FileWriter(fileName,
+					true)));
 			// Create the string
 			for (int i = 0; i < bigList.size(); i++) {
 				out.println(bigList.get(i));
@@ -73,6 +81,6 @@ public class WriteSaveWorker extends SwingWorker<Integer, Void> {
 		// Exit with status 0 to indicate success
 		out.close();
 		return 0;
-		
+
 	}
 }
