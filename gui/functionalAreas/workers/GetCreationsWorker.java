@@ -21,6 +21,7 @@ import javax.swing.SwingWorker;
  */
 public class GetCreationsWorker extends SwingWorker<Void, Creation> {
 	private AdvancedUploadArea aa;
+	@SuppressWarnings("unused")
 	private int exitcode;
 
 	public GetCreationsWorker() {
@@ -69,6 +70,7 @@ public class GetCreationsWorker extends SwingWorker<Void, Creation> {
 		return null;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	protected void process(List<Creation> chunks) {
 		for (Creation number : chunks) {
@@ -77,6 +79,7 @@ public class GetCreationsWorker extends SwingWorker<Void, Creation> {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	protected void done() {
 		aa.btnDelete.setEnabled(true);

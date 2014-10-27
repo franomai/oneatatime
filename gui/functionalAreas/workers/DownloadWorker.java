@@ -25,6 +25,7 @@ import javax.swing.SwingWorker;
 public class DownloadWorker extends SwingWorker<Integer, Integer> {
 
 	private String _url;
+	@SuppressWarnings("unused")
 	private String _filename;
 	private JProgressBar _progress;
 	private boolean _cancel;

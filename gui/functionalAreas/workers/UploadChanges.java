@@ -23,10 +23,13 @@ import javax.swing.SwingWorker;
  */
 
 public class UploadChanges extends SwingWorker<Void, Creation> {
+	@SuppressWarnings("unused")
 	private AdvancedUploadArea aa;
+	@SuppressWarnings("unused")
 	private int exitcode;
 	private String desc;
 	private String url;
+	@SuppressWarnings("unused")
 	private int test;
 
 	public UploadChanges(String d, String u, int test) {

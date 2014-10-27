@@ -15,6 +15,7 @@ import javax.swing.SwingWorker;
  * 
  */
 public class StreamWorker extends SwingWorker<String, Void> {
+	@SuppressWarnings("unused")
 	private int exitcode;
 	private String inFile;
 	private String a = "0,";

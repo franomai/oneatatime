@@ -16,6 +16,7 @@ import javax.swing.SwingWorker;
  * 
  */
 public class SubtitlesWorker extends SwingWorker<Integer, Void> {
+	@SuppressWarnings("unused")
 	private int exitcode;
 	private String inFile;
 	private int strim = -1;

@@ -15,6 +15,7 @@ import javax.swing.SwingWorker;
  * 
  */
 public class DurationWorker extends SwingWorker<Integer, Void> {
+	@SuppressWarnings("unused")
 	private int exitcode;
 	private String inFile;
 	private String dur = "";
