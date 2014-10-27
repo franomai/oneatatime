@@ -2,16 +2,11 @@ package gui.functionalAreas.workers;
 
 import gui.functionalAreas.subtitleAreas.BasicCreateSubtitles;
 import gui.functionalAreas.subtitleAreas.Subtitle;
-import gui.functionalAreas.textAreas.AdvancedAddTextArea;
-import gui.functionalAreas.textAreas.BasicAddCreditsArea;
-import gui.functionalAreas.textAreas.BasicAddTextArea;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

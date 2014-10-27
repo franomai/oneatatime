@@ -1,10 +1,6 @@
 package gui.functionalAreas.workers;
 
 import gui.functionalAreas.subtitleAreas.Subtitle;
-import gui.functionalAreas.textAreas.AdvancedAddTextArea;
-import gui.functionalAreas.textAreas.BasicAddCreditsArea;
-import gui.functionalAreas.textAreas.BasicAddTextArea;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

@@ -3,10 +3,6 @@ package gui.functionalAreas.workers;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 /**

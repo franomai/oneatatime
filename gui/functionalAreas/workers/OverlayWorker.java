@@ -3,11 +3,8 @@ package gui.functionalAreas.workers;
 import gui.functionalAreas.AbstractFunctionalArea;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 /**
