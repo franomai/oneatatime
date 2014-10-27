@@ -29,7 +29,7 @@ public class Defaults {
 	public static final int DefaultFuncAreaWidth = 750;
 	public static final int DefaultControlWidth = 500;
 	public static final int DefaultControlHeight = 60;
-	public static final int DefaultBufferHeight = 75 * 2; // x2 or x1
+	public static final int DefaultBufferHeight = 75; //75 or 38
 	// Colours
 	public static final Color DefaultWritingColour = new Color(0, 0, 0);
 	public static final Color DefaultDownloadColour = new Color(153, 204, 255);

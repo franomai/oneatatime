@@ -155,7 +155,7 @@ public class VideoControlArea extends JPanel implements ActionListener {
 		// Get dl icon
 		ImageIcon downloadIcon = new ImageIcon(
 				AbstractFunctionalArea.class
-						.getResource("/gui/assets/choose.png"));
+						.getResource("/gui/assets/open.png"));
 		// Get replay icon
 		ImageIcon replayIcon = new ImageIcon(
 				AbstractFunctionalArea.class
