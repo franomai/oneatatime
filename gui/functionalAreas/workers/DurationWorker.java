@@ -9,6 +9,13 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that computes the duration of a file from a 
+ * call to the Lixux Command avprobe. It takes in the location of the file to be tested,
+ * passes this String into avprobe and the results of this command are parsed.
+ * @author fsta657
+ * 
+ */
 public class DurationWorker extends SwingWorker<Integer, Void> {
 	private int exitcode;
 	private String inFile;

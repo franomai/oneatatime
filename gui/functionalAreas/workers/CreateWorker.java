@@ -17,6 +17,13 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that creates a .ass subtitle file from
+ * a list of subtitle objects - it reads in each, and writes the associated text to a
+ * output .ass file as determined by the field out.
+ * @author fsta657
+ * 
+ */
 public class CreateWorker extends SwingWorker<Integer, Void> {
 
 	private List<Subtitle> list;

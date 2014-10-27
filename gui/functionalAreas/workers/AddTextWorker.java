@@ -10,6 +10,13 @@ import java.io.InputStreamReader;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that adds text to a given video file.
+ * It takes many parameters, and these essentially boil down to the input file,
+ * output file name, and a variety of customization options. The last flag however, whichEnd,
+ * determines whichEnd the text is added to, 1 for the start, 2 for the end, and a preview otherwise.
+ * @author fsta657
+ */
 public class AddTextWorker extends SwingWorker<Void, Integer> {
 	private int exitcode;
 	private String inFile;
@@ -22,9 +29,6 @@ public class AddTextWorker extends SwingWorker<Void, Integer> {
 	private String time;
 	private int whichEnd; // USE ONE FOR START
 	private AbstractFunctionalArea area;
-
-	// Takes in -->address<-- of the audio file and the -->address<-- of video
-	// file and output file name -->with the extension<---.
 
 	public AddTextWorker(String inFile, String outFile,
 			AbstractFunctionalArea area, String font, String text, String pos,

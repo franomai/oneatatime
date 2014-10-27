@@ -15,14 +15,21 @@ import javax.swing.SwingWorker;
 
 public class LoadWorker extends SwingWorker<ArrayList<Subtitle>, Void> {
 
+	/**
+	 * This class represents a Swing Worker that reads in a .ass file and
+	 * converts each found subtitle to a subtitle object, and these objects are
+	 * collated into a list and passed back to the main.
+	 * 
+	 * @author fsta657
+	 * 
+	 */
 	private String _path;
 
-	public LoadWorker( String path) {
-		_path=path;
+	public LoadWorker(String path) {
+		_path = path;
 	}
-	
-	protected void done(){
-		System.out.println("OH NO");	
+
+	protected void done() {
 	}
 
 	@Override
@@ -33,28 +40,28 @@ public class LoadWorker extends SwingWorker<ArrayList<Subtitle>, Void> {
 		try {
 			br = new BufferedReader(new FileReader(file));
 			String line;
-			while ((line = br.readLine())!=null){
-				if (line.contains("Dialogue")){
+			while ((line = br.readLine()) != null) {
+				if (line.contains("Dialogue")) {
 					String[] list = line.split(",");
-					String one = list[1].substring(0,list[1].lastIndexOf('.'));
-					String two = list[2].substring(0,list[2].lastIndexOf('.'));
-					
+					String one = list[1].substring(0, list[1].lastIndexOf('.'));
+					String two = list[2].substring(0, list[2].lastIndexOf('.'));
+
 					String[] test = one.split(":");
-					if (test[0].length() < 2){
-						one = "0"+one;
+					if (test[0].length() < 2) {
+						one = "0" + one;
 					}
 					String[] test2 = two.split(":");
-					if (test2[0].length() < 2){
-						two = "0"+two;
+					if (test2[0].length() < 2) {
+						two = "0" + two;
 					}
-					
+
 					array.add(new Subtitle(one, two, list[3]));
-					
+
 				}
 			}
 			br.close();
 		} catch (IOException e) {
-System.out.println("Oops.");
+			System.out.println("Oops.");
 		}
 
 		// Exit with status 0 to indicate success

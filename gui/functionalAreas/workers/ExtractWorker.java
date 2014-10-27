@@ -9,6 +9,15 @@ import java.io.InputStreamReader;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that extracts the audio stream from a
+ * video/audio file by essentially taking the input file as a String and a
+ * variable indicating the audio stream. This stream is then extracted from the
+ * input and funneled into the output (as dictated by the outFile variable).
+ * 
+ * @author fsta657
+ * 
+ */
 public class ExtractWorker extends SwingWorker<Void, Integer> {
 	private int exitcode;
 	private String inFile;
@@ -16,10 +25,8 @@ public class ExtractWorker extends SwingWorker<Void, Integer> {
 	private AbstractFunctionalArea area;
 	private int strim;
 
-	// Takes in -->address<-- of video file and output file name -->with the
-	// extension<---.
-
-	public ExtractWorker(String inFile, String outFile, int strim, AbstractFunctionalArea area) {
+	public ExtractWorker(String inFile, String outFile, int strim,
+			AbstractFunctionalArea area) {
 		this.inFile = inFile;
 		this.outFile = outFile;
 		this.area = area;
@@ -30,7 +37,8 @@ public class ExtractWorker extends SwingWorker<Void, Integer> {
 	protected Void doInBackground() {
 		ProcessBuilder builder;
 		// -y forces override.
-		builder = new ProcessBuilder("avconv", "-i", inFile, "-map","0:"+strim, "-y", outFile);
+		builder = new ProcessBuilder("avconv", "-i", inFile, "-map", "0:"
+				+ strim, "-y", outFile);
 		builder.redirectErrorStream(true);
 		try {
 			Process process = builder.start();
@@ -39,10 +47,10 @@ public class ExtractWorker extends SwingWorker<Void, Integer> {
 					new InputStreamReader(stdout));
 			String line = null;
 			while ((line = stdoutBuffered.readLine()) != null) {
-				if (this.isCancelled()){
+				if (this.isCancelled()) {
 					process.destroy();
-				}else{
-				System.out.println(line);
+				} else {
+					System.out.println(line);
 				}
 			}
 			exitcode = process.waitFor();
@@ -55,7 +63,7 @@ public class ExtractWorker extends SwingWorker<Void, Integer> {
 
 	@Override
 	protected void done() {
-		if (this.isCancelled()){
+		if (this.isCancelled()) {
 			exitcode = 9001;
 		}
 		area.processWorkerResults(exitcode);

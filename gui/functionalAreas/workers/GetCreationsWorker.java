@@ -17,12 +17,17 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that gets the current log of user
+ * creations from the server and updates the GUI based on the contents of the
+ * file downloaded.
+ * 
+ * @author fsta657
+ * 
+ */
 public class GetCreationsWorker extends SwingWorker<Void, Creation> {
 	private AdvancedUploadArea aa;
 	private int exitcode;
-
-	// Takes in -->address<-- of video file and output file name -->with the
-	// extension<---.
 
 	public GetCreationsWorker() {
 	}
@@ -31,7 +36,8 @@ public class GetCreationsWorker extends SwingWorker<Void, Creation> {
 	protected Void doInBackground() {
 		ProcessBuilder builder;
 		// -y forces override.
-		builder = new ProcessBuilder("./dropbox_uploader.sh", "download", "thelog.txt", ".local.txt");
+		builder = new ProcessBuilder("./dropbox_uploader.sh", "download",
+				"thelog.txt", ".local.txt");
 		builder.redirectErrorStream(true);
 		try {
 			Process process = builder.start();
@@ -52,31 +58,30 @@ public class GetCreationsWorker extends SwingWorker<Void, Creation> {
 		try {
 			br = new BufferedReader(new FileReader(file));
 			String line;
-			while ((line = br.readLine())!=null){
+			while ((line = br.readLine()) != null) {
 				System.out.println(line);
 				String[] arr = line.split("\\|");
-				for (int i = 0; i < arr.length; i++){
+				for (int i = 0; i < arr.length; i++) {
 					System.out.println(arr[i]);
 				}
-				Creation temp = new Creation(arr[0],arr[1]);
+				Creation temp = new Creation(arr[0], arr[1]);
 				publish(temp);
 			}
 			br.close();
 		} catch (IOException e) {
-exitcode = 1;
+			exitcode = 1;
 		}
-		
-		
+
 		return null;
 	}
-	
+
 	@Override
-    protected void process(List<Creation> chunks) {
-        for (Creation number : chunks) {
-            aa.list.add(number);
-            aa.model.fireTableDataChanged();
-        }
-    }
+	protected void process(List<Creation> chunks) {
+		for (Creation number : chunks) {
+			aa.list.add(number);
+			aa.model.fireTableDataChanged();
+		}
+	}
 
 	@Override
 	protected void done() {

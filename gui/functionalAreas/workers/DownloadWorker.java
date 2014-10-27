@@ -13,6 +13,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
+/**
+ * This class represents a Swing Worker that makes a call to the Linux command
+ * wget to download a file from a website. It takes in the URL as input and
+ * assuming the download is successful will save the output to a location
+ * determined by the out parameter.
+ * 
+ * @author fsta657
+ * 
+ */
 public class DownloadWorker extends SwingWorker<Integer, Integer> {
 
 	private String _url;
@@ -47,7 +56,7 @@ public class DownloadWorker extends SwingWorker<Integer, Integer> {
 		} catch (InterruptedException | ExecutionException e) {
 			// Deal with exceptions by leaving exit status as 1 - error
 		}
-		if (_cancel == true){
+		if (_cancel == true) {
 			exitStatus = 9001;
 		}
 		_pane.processWorkerResults(exitStatus);
@@ -69,7 +78,7 @@ public class DownloadWorker extends SwingWorker<Integer, Integer> {
 
 		// First check if the file exists
 		String[] test = out.split("/");
-		File f = new File(test[test.length-1]);
+		File f = new File(test[test.length - 1]);
 		if (f.exists()) {
 			overWrite = JOptionPane
 					.showConfirmDialog(
@@ -86,9 +95,9 @@ public class DownloadWorker extends SwingWorker<Integer, Integer> {
 		ProcessBuilder builder;
 		if (overWrite == 0) {
 			f.delete();
-			builder = new ProcessBuilder("wget","-O",out, _url);
+			builder = new ProcessBuilder("wget", "-O", out, _url);
 		} else {
-			builder = new ProcessBuilder("wget","-O",out, "-c", _url);
+			builder = new ProcessBuilder("wget", "-O", out, "-c", _url);
 		}
 
 		// Redirect error to output
